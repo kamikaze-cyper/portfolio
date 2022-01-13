@@ -1,0 +1,128 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="hero">
+    <div class="hero--content">
+        <div class="hero--content--intro">
+            <img id="profile_pic" src="{% static 'images/himanshu1.jpg' %}">
+            <h1 class="intro--name">Himanshu <br> Bundela</h1>
+        </div>
+        <a class="btn btn-light btn-sm" href="https://drive.google.com/file/d/1R84zDmlsyEbzap9sokdAbfszFcWMFLv1/view?usp=sharing">
+            Resume
+        </a>
+        <div class="hero--content--subheadline">
+
+            <h3 class="description">Developer</h3>
+            <p class="slogan">I am a student who is pursuing MCA Engineering.</p>
+            
+        </div>
+    </div>
+
+</section>
+
+<section class="container section--2">
+
+    <h3>My Projects</h3>
+    <h5>My Achievement Throughout...</h5>
+    <div class="projects--wrapper">
+
+        {% for project in projects %}
+        <div class="project--column">
+            <a href="{% url 'project' project.id %}">
+                <img class="project--thumbnail" src="{{project.thumbnail.url}}">
+            </a>
+            <div class="project--body">
+                <h5>{{project.title}}</h5>
+            </div>
+        </div>
+        {% empty %}
+
+        <h3>There are no projects in the database...</h3 {% endfor %} </div>
+
+
+        <div class="about--wrapper">
+            <h3>About Me</h3>
+
+            <p>I am a graduate from pune university who is passionate about computer science and programming</p>
+            <p> My Interests Include Software Design and Development,Artificial Intelligence,Machine Learning
+                computer vision and Natural Language Processing.
+                I'm Currently a Graduate Student working Toward  Master of Computer Application(MCA) in Engineering
+            </p>
+        </div>
+
+</section>
+
+<section class="section--1">
+    <div class="skills--container">
+        <h3>More About Me</h3>
+
+        {% for skill in detailedSkills %}
+        <div class="skill--wrapper">
+            {% if skill.logo %}
+            <img class="skill--logo" src="{{skill.logo.url}}">
+            {% endif %}
+            <div>
+                <h5>{{skill.title}}</h5>
+                <p>{{skill.body}}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+
+        <h4>Other Skills</h4>
+        <div class="other--skills--wrapper">
+            {% for skill in skills %}
+            <div class="skill--tag">
+                <span>{{skill.title}}</span>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+</section>
+
+
+<section class="section--2">
+    <div class="skills--container">
+        <h3>My Blog Post</h3>
+        <!---<a class="btn btn-primary my-3" href="{% url 'add-endorsement' %}">Add Endorsement</a>--->
+
+        {% for i in endorsements %}
+        <div style="margin-bottom: 1em;" class="card">
+            <div class="card-body">
+                <h5>{{i.name}}</h5>
+                <p>{{i.body}}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+</section>
+
+<section class="section--1">
+    <div class="container">
+        <form class="contact--form" method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+                {{field}}
+            </div>
+
+            {% endfor %}
+
+            <input class="btn btn-primary" type="submit" value="submit">
+        </form>
+    </div>
+</section>
+
+{% endblock content %}
